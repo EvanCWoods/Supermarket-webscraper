@@ -1,0 +1,5 @@
+* Open search bar -> enter user input -> collect url from that search -> scrape that page for results.
+
+* How to avoid being liocked out of the website for too many visits?
+
+* How to place orders on behalf of users.
