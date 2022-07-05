@@ -1,27 +1,20 @@
+from selenium import webdriver
 from bs4 import BeautifulSoup
-import requests
-import re
 
-section = "https://shop.coles.com.au/a/national/triple-flybuys-points-selection/browse/meat-seafood/beef-veal?pageNumber=1"
+# path to chromedriver
+driver = webdriver.Chrome('/usr/local/bin/chromedriver')
+# url to emulate using selenium
+global_dynamicUrl = "https://www.woolworths.com.au/shop/search/products?searchTerm=beef"
+# open the emulator
+driver.get(global_dynamicUrl)
+html = driver.page_source
 
-def getHTMLdocument(url):    
-    # request for HTML document of given url
-    response = requests.get(url)
-    # response will be provided in JSON format
-    return response.text
+# Start parsing the emulated content using BeautifulSoup
+soup = BeautifulSoup(html)
 
+# Isolate the dollar prices
+for tag in soup.find_all('span', class_="price-dollars"):
+    print(tag.text)
 
-def runScrape():
-    html_document = getHTMLdocument(section)
-    # create soap object
-    soup = BeautifulSoup(html_document, 'html.parser')
-    for a in soup.find_all("a"):
-        print(a.href)
-    print(soup)
-
-
-def main():
-    runScrape()
-
-if __name__=="__main__":
-    main()
+# close the connection to selenium // NEEDED
+driver.close()
