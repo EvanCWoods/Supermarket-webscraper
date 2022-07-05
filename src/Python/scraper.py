@@ -1,9 +1,20 @@
 from selenium import webdriver
+from bs4 import BeautifulSoup
 
+# path to chromedriver
 driver = webdriver.Chrome('/usr/local/bin/chromedriver')
-global_dynamicUrl = "https://iqssdss2020.pythonanywhere.com/tutorial/default/dynamic"
+# url to emulate using selenium
+global_dynamicUrl = "https://www.woolworths.com.au/shop/search/products?searchTerm=beef"
+# open the emulator
 driver.get(global_dynamicUrl)
-table_area = driver.find_element_by_xpath('//*[@id="result"]/table')
-table_entries = table_area.find_elements_by_tag_name("tr")
-print(len(table_entries))
+html = driver.page_source
+
+# Start parsing the emulated content using BeautifulSoup
+soup = BeautifulSoup(html)
+
+# Isolate the dollar prices
+for tag in soup.find_all('span', class_="price-dollars"):
+    print(tag.text)
+
+# close the connection to selenium // NEEDED
 driver.close()
