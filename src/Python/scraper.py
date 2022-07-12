@@ -9,6 +9,11 @@ global_dynamicUrl = "https://www.woolworths.com.au/shop/search/products?searchTe
 driver.get(global_dynamicUrl)
 html = driver.page_source
 
+# Function to get the user input
+def getData():
+    userChoice = input("What are you searching for? ")
+    return userChoice
+
 # Start parsing the emulated content using BeautifulSoup
 soup = BeautifulSoup(html)
 
