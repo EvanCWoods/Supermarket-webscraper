@@ -1,8 +1,11 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 
 # path to chromedriver
 driver = webdriver.Chrome('/usr/local/bin/chromedriver')
+chrome_options = Options()
+chrome_options.add_argument("--headless")
 
 # Function to get the user input
 def getData():
