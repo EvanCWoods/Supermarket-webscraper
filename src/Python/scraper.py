@@ -7,6 +7,7 @@ driver = webdriver.Chrome('/usr/local/bin/chromedriver')
 chrome_options = Options()
 chrome_options.add_argument("--headless")
 
+searchUrls = ["https://www.woolworths.com.au/shop/search/products?searchTerm=", "https://shop.coles.com.au/a/national/everything/search/"]
 # Function to get the user input
 def getData():
     userChoice = input("What are you searching for? ")
@@ -15,11 +16,11 @@ def getData():
 # Function to search woolworths using the search
 def searchWoolworths():
     # url to emulate using selenium=
-    searchUrl = f"https://www.woolworths.com.au/shop/search/products?searchTerm={getData()}"
-    # open the emulator
-    driver.get(searchUrl)
-    # Start parsing the emulated content using BeautifulSoup
-    return BeautifulSoup(driver.page_source)
+    for item in searchUrls:
+        # open the emulator
+        driver.get(item + getData())
+        # Start parsing the emulated content using BeautifulSoup
+        return BeautifulSoup(driver.page_source)
 
 # Isolate the dollar prices
 for tag in searchWoolworths().find_all('span', class_="price-dollars"):
